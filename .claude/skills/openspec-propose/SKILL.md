@@ -108,3 +108,49 @@ After completing all artifacts, summarize:
 - If context is critically unclear, ask the user - but prefer making reasonable decisions to keep momentum
 - If a change with that name already exists, ask if user wants to continue it or create a new one
 - Verify each artifact file exists after writing before proceeding to next
+
+---
+
+## TDD Mode (MANDATORY)
+
+**CRITICAL**: When creating the `tasks.md` artifact, you MUST follow Test-Driven Development (TDD) workflow for ALL implementation tasks.
+
+### TDD Requirements
+
+Every implementation task MUST follow this pattern:
+
+```
+### X.Y Feature Name
+
+- [ ] X.Y.1 **先写测试**：创建 `src/xxx.test.ts`，测试...
+- [ ] X.Y.2 **后写实现**：创建 `src/xxx.ts`，实现...
+```
+
+### TDD Workflow
+
+```
+┌─────────────────────────────────────────────────────┐
+│  每个任务遵循:                                        │
+│                                                     │
+│  1. 写测试 (RED) → 测试失败，定义期望行为            │
+│  2. 写实现 (GREEN) → 最小代码让测试通过              │
+│  3. 重构 (IMPROVE) → 优化代码，保持测试通过          │
+└─────────────────────────────────────────────────────┘
+```
+
+### Example Task Structure
+
+```markdown
+## 1. 数据层实现
+
+### 1.1 用户认证
+
+- [ ] 1.1.1 **先写测试**：创建 `src/utils/auth.test.ts`，测试登录函数
+- [ ] 1.1.2 **后写实现**：创建 `src/utils/auth.ts`，实现登录逻辑
+```
+
+### Mandatory Notes
+
+- **ALWAYS write tests FIRST** before any implementation code
+- Run tests to verify they fail (RED state)
+- Then write minimal code to pass tests (GREEN state)

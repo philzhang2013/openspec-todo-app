@@ -7,13 +7,15 @@ describe('Todo Type', () => {
       id: '1',
       content: 'Test task',
       completed: false,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      priority: 'medium'
     }
 
     expect(todo).toHaveProperty('id')
     expect(todo).toHaveProperty('content')
     expect(todo).toHaveProperty('completed')
     expect(todo).toHaveProperty('createdAt')
+    expect(todo).toHaveProperty('priority')
   })
 
   it('should allow boolean for completed', () => {
@@ -21,10 +23,23 @@ describe('Todo Type', () => {
       id: '1',
       content: 'Test task',
       completed: true,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      priority: 'high'
     }
 
     expect(todo.completed).toBe(true)
+  })
+
+  it('should allow priority values', () => {
+    const todo: Todo = {
+      id: '1',
+      content: 'Test task',
+      completed: false,
+      createdAt: Date.now(),
+      priority: 'low'
+    }
+
+    expect(todo.priority).toBe('low')
   })
 
   it('should require all fields', () => {
@@ -32,12 +47,14 @@ describe('Todo Type', () => {
       id: '1',
       content: 'Test task',
       completed: false,
-      createdAt: 1234567890
+      createdAt: 1234567890,
+      priority: 'medium'
     }
 
     expect(todo.id).toBeDefined()
     expect(todo.content).toBeDefined()
     expect(todo.completed).toBeDefined()
     expect(todo.createdAt).toBeDefined()
+    expect(todo.priority).toBeDefined()
   })
 })

@@ -12,7 +12,7 @@ describe('storage utils', () => {
   describe('saveTodos', () => {
     it('should save todos to localStorage', () => {
       const todos: Todo[] = [
-        { id: '1', content: 'Test task', completed: false, createdAt: Date.now() }
+        { id: '1', content: 'Test task', completed: false, createdAt: Date.now(), priority: 'medium' }
       ]
 
       saveTodos(todos)
@@ -23,10 +23,10 @@ describe('storage utils', () => {
 
     it('should overwrite existing data', () => {
       const initialTodos: Todo[] = [
-        { id: '1', content: 'Initial', completed: false, createdAt: Date.now() }
+        { id: '1', content: 'Initial', completed: false, createdAt: Date.now(), priority: 'medium' }
       ]
       const newTodos: Todo[] = [
-        { id: '2', content: 'New', completed: true, createdAt: Date.now() }
+        { id: '2', content: 'New', completed: true, createdAt: Date.now(), priority: 'high' }
       ]
 
       saveTodos(initialTodos)
@@ -40,7 +40,7 @@ describe('storage utils', () => {
   describe('loadTodos', () => {
     it('should load todos from localStorage', () => {
       const todos: Todo[] = [
-        { id: '1', content: 'Test task', completed: false, createdAt: Date.now() }
+        { id: '1', content: 'Test task', completed: false, createdAt: Date.now(), priority: 'medium' }
       ]
       localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
 

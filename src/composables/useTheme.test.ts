@@ -37,7 +37,7 @@ describe('useTheme', () => {
   })
 
   it('should persist theme to localStorage when changed', async () => {
-    const { theme, toggleTheme } = useTheme()
+    const { toggleTheme } = useTheme()
 
     toggleTheme()
 

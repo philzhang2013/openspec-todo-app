@@ -8,7 +8,8 @@ describe('TodoItem', () => {
     id: '1',
     content: 'Test task',
     completed: false,
-    createdAt: Date.now()
+    createdAt: Date.now(),
+    priority: 'medium'
   }
 
   it('should render todo content', () => {
@@ -76,5 +77,44 @@ describe('TodoItem', () => {
     })
 
     expect(wrapper.find('.completed').exists()).toBe(false)
+  })
+
+  it('should render priority label', () => {
+    const wrapper = mount(TodoItem, {
+      props: {
+        todo: mockTodo,
+        onToggle: vi.fn(),
+        onDelete: vi.fn()
+      }
+    })
+
+    expect(wrapper.find('.priority-label').exists()).toBe(true)
+    expect(wrapper.find('.priority-label').text()).toContain('中')
+  })
+
+  it('should show high priority class', () => {
+    const highPriorityTodo = { ...mockTodo, priority: 'high' as const }
+    const wrapper = mount(TodoItem, {
+      props: {
+        todo: highPriorityTodo,
+        onToggle: vi.fn(),
+        onDelete: vi.fn()
+      }
+    })
+
+    expect(wrapper.find('.priority-high').exists()).toBe(true)
+  })
+
+  it('should show low priority class', () => {
+    const lowPriorityTodo = { ...mockTodo, priority: 'low' as const }
+    const wrapper = mount(TodoItem, {
+      props: {
+        todo: lowPriorityTodo,
+        onToggle: vi.fn(),
+        onDelete: vi.fn()
+      }
+    })
+
+    expect(wrapper.find('.priority-low').exists()).toBe(true)
   })
 })

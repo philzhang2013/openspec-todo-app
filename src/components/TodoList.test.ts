@@ -5,8 +5,8 @@ import type { Todo } from '../types/Todo'
 
 describe('TodoList', () => {
   const mockTodos: Todo[] = [
-    { id: '1', content: 'Task 1', completed: false, createdAt: Date.now() },
-    { id: '2', content: 'Task 2', completed: true, createdAt: Date.now() }
+    { id: '1', content: 'Task 1', completed: false, createdAt: Date.now(), priority: 'medium' },
+    { id: '2', content: 'Task 2', completed: true, createdAt: Date.now(), priority: 'high' }
   ]
 
   it('should render list of todos', () => {

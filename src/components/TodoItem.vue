@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Todo } from '../types/Todo'
+import type { Todo, Priority } from '../types/Todo'
 
 defineProps<{
   todo: Todo
@@ -9,6 +9,12 @@ const emit = defineEmits<{
   (e: 'toggle', id: string): void
   (e: 'delete', id: string): void
 }>()
+
+const priorityLabels: Record<Priority, string> = {
+  high: '高',
+  medium: '中',
+  low: '低'
+}
 </script>
 
 <template>
@@ -19,6 +25,9 @@ const emit = defineEmits<{
       @change="emit('toggle', todo.id)"
     />
     <span class="content">{{ todo.content }}</span>
+    <span class="priority-label" :class="`priority-${todo.priority}`">
+      {{ priorityLabels[todo.priority] }}
+    </span>
     <button class="delete-btn" @click="emit('delete', todo.id)">删除</button>
   </div>
 </template>
@@ -66,5 +75,27 @@ input[type="checkbox"] {
 
 .delete-btn:hover {
   background-color: var(--delete-hover-color);
+}
+
+.priority-label {
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.priority-high {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.priority-medium {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.priority-low {
+  background-color: #d1fae5;
+  color: #059669;
 }
 </style>

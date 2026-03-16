@@ -9,7 +9,7 @@ describe('useTodos', () => {
 
   it('should load todos from storage on init', () => {
     const storedTodos: Todo[] = [
-      { id: '1', content: 'Stored task', completed: false, createdAt: Date.now() }
+      { id: '1', content: 'Stored task', completed: false, createdAt: Date.now(), priority: 'medium' }
     ]
     localStorage.setItem('todos', JSON.stringify(storedTodos))
 

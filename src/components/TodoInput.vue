@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import type { Priority } from '../types/Todo'
 
 const props = defineProps<{
-  onAdd: (content: string) => void
+  onAdd: (content: string, priority?: Priority) => void
 }>()
 
 const inputValue = ref('')
+const priority = ref<Priority>('medium')
 
 function handleAdd() {
   if (!inputValue.value.trim()) return
-  props.onAdd(inputValue.value)
+  props.onAdd(inputValue.value, priority.value)
   inputValue.value = ''
+  priority.value = 'medium'
 }
 </script>
 
@@ -22,6 +25,11 @@ function handleAdd() {
       placeholder="添加新任务..."
       @keyup.enter="handleAdd"
     />
+    <select v-model="priority">
+      <option value="high">高</option>
+      <option value="medium">中</option>
+      <option value="low">低</option>
+    </select>
     <button @click="handleAdd">添加</button>
   </div>
 </template>
@@ -46,6 +54,16 @@ input {
 input:focus {
   outline: none;
   border-color: var(--primary-color);
+}
+
+select {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--input-bg-color);
+  color: var(--text-color);
+  cursor: pointer;
 }
 
 button {

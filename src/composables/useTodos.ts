@@ -1,9 +1,17 @@
 import { ref, watch } from 'vue'
-import type { Todo } from '../types/Todo'
+import type { Todo, Priority } from '../types/Todo'
 import { saveTodos, loadTodos } from '../utils/storage'
 
 export function useTodos() {
-  const todos = ref<Todo[]>(loadTodos())
+  const loadedTodos = loadTodos()
+
+  // 兼容旧数据：没有 priority 字段的使用默认值
+  const todos = ref<Todo[]>(loadedTodos.map(todo => {
+    if (!todo.priority) {
+      return { ...todo, priority: 'medium' as Priority }
+    }
+    return todo
+  }))
 
   watch(
     todos,
@@ -13,30 +21,30 @@ export function useTodos() {
     { deep: true }
   )
 
-  function addTodo(content: string) {
+  function addTodo(content: string, priority: Priority = 'medium') {
     if (!content.trim()) return
 
     const newTodo: Todo = {
-      id: Date.now().toString(),
+      id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
       content: content.trim(),
       completed: false,
-      createdAt: Date.now()
+      createdAt: Date.now(),
+      priority
     }
-    todos.value.push(newTodo)
+    todos.value = [...todos.value, newTodo]
   }
 
   function toggleTodo(id: string) {
-    const todo = todos.value.find((t) => t.id === id)
-    if (todo) {
-      todo.completed = !todo.completed
-    }
+    todos.value = todos.value.map(todo => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed }
+      }
+      return todo
+    })
   }
 
   function deleteTodo(id: string) {
-    const index = todos.value.findIndex((t) => t.id === id)
-    if (index !== -1) {
-      todos.value.splice(index, 1)
-    }
+    todos.value = todos.value.filter(t => t.id !== id)
   }
 
   return {

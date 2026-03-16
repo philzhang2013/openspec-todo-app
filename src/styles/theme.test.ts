@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 
 describe('theme.css', () => {
-  const themeCssPath = path.resolve(__dirname, 'theme.css')
+  const themeCssPath = path.resolve(import.meta.dirname, 'theme.css')
 
   it('should exist', () => {
     expect(fs.existsSync(themeCssPath)).toBe(true)
